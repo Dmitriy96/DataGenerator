@@ -9,11 +9,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sf.hibernate.MappingException;
-import net.sf.hibernate.Session;
+//import net.sf.hibernate.MappingException;
+//import net.sf.hibernate.Session;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.MappingException;
+import org.hibernate.Session;
 
 //import com.jcatalog.commons.hibernate.SessionManager;
 //import com.jcatalog.commons.hibernate.mapping.MappingObject;
@@ -77,11 +79,11 @@ public class HibernateDataGenerator extends AbstractDataGenerator {
 	 */
 	public void flush() throws Exception {
 		try {
-			session.flush();
-			session.connection().commit();
+//			session.flush();
+//			session.connection().commit();
 		} catch (Exception e) {
 			log.error(e);
-			session.connection().rollback();
+//			session.connection().rollback();
 			throw new Exception(e);
 		}
 	}
@@ -92,7 +94,7 @@ public class HibernateDataGenerator extends AbstractDataGenerator {
 	 * @throws Exception if any error occurs
 	 */
 	public void close() throws Exception {
-		session.close();
+//		session.close();
 	}
 
 	/**
@@ -115,7 +117,7 @@ public class HibernateDataGenerator extends AbstractDataGenerator {
 //		}
 		if (!isLoaded) {
 			try {
-				session.save(object);
+//				session.save(object);
 			} catch (MappingException e) {
 				if (log.isDebugEnabled()) {
 					log.warn("Trying store object " + object
@@ -164,7 +166,7 @@ public class HibernateDataGenerator extends AbstractDataGenerator {
 
 //		session.load(object, SessionManager.getSessionFactory()
 //				.getClassMetadata(object.getClass()).getIdentifier(object));
-		session.delete(object);
+//		session.delete(object);
 	}
 
 	/**
@@ -177,7 +179,7 @@ public class HibernateDataGenerator extends AbstractDataGenerator {
 			log.debug("Update object " + object + " with id " + id);
 		}
 
-		session.saveOrUpdate(object);
+//		session.saveOrUpdate(object);
 	}
 
 	/**
@@ -190,10 +192,10 @@ public class HibernateDataGenerator extends AbstractDataGenerator {
 		}
 
 		fillCommandsFromFile(CLEAR_SQL);
-		Statement stmt = session.connection().createStatement();
-		for (int i = 0; i < commands.size(); i++) {
-			stmt.execute((String) commands.get(i));
-		}
+//		Statement stmt = session.connection().createStatement();
+//		for (int i = 0; i < commands.size(); i++) {
+//			stmt.execute((String) commands.get(i));
+//		}
 	}
 
 	public static void setScriptStream(InputStream stream) {
@@ -216,10 +218,10 @@ public class HibernateDataGenerator extends AbstractDataGenerator {
 	@Override
 	protected void eventClear(List objects) throws Exception {
 		for (Iterator i = objects.iterator(); i.hasNext();) {
-			session.evict(i.next());
+//			session.evict(i.next());
 		}
-		session.disconnect();
-		session.reconnect();
+//		session.disconnect();
+//		session.reconnect();
 	}
 
 	/**
