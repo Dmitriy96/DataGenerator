@@ -1,0 +1,13 @@
+<variable name="studentName" value="Dmitry"/>
+<variable name="studentAge" value="20"/>
+
+<object id="1" action="save" class="/home/dmitriy/IdeaProjects/diplom/src/main/java/by/bsuir/diplom/entities/Student.java">
+    <property name="name" value="${studentName}"/>
+    <property name="surnname" value="Sanko"/>
+    <property name="age" value="${studentAge}"/>
+</object>
+<object id="2" action="save" class="/home/dmitriy/IdeaProjects/diplom/src/main/java/by/bsuir/diplom/entities/Student.java">
+    <property name="name" value="Will"/>
+    <property name="surnname" value="Smith"/>
+    <property name="age" value="35"/>
+</object>

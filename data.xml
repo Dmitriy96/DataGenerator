@@ -1,0 +1,65 @@
+<variable name="facultyCount" value="12"/>
+<variable name="groupCountForFaculty" value="80"/>
+<variable name="studentsCount" value="10000"/>
+
+<series count="3" var="scriptNum">
+  <execute-script script="resources/clear_${scriptNum}.sql"/>
+</series>
+
+<object action="load" class="com.test.mapping.University" id="university1">
+  <property name="universityId" value="BSUIR"/>
+</object>
+<series count="${facultyCount}" from="1" var="facultyNum">
+  <object class="com.test.mapping.Faculty" id="faculty${facultyNum}">
+    <property name="facultySn">
+	  <generator class="com.datageneration.generators.SequenceGenerator"/>
+    </property>
+    <property name="facultyId" value="Faculty${facultyNum}"/>
+    <property name="descShort">
+      <generator class="com.datageneration.generators.RandomStringGenerator">
+        <param name="length" value="500"/>
+      </generator>
+    </property>
+    <property name="university" refid="university1"/>
+  </object>
+  <series count="${groupCountForFaculty}" var="groupNum">
+    <object class="com.test.mapping.Group" id="Group${groupNum}">
+      <property name="groupId" value="Group${groupNum}"/>
+      <property name="group" value="${groupNum}"/>
+      <property name="faculty" refid="Faculty${facultyNum}"/>
+    </object>
+  </series>
+</series>
+
+<flush>
+  <clean class="com.test.mapping.Faculty" mask="Faculty1%"/>
+  <clean class="com.test.mapping.Group"/>
+</flush>
+
+<series count="${studentsCount}" var="studNum">
+  <object class="com.test.mapping.Student" id="${studNum}">
+    <property name="studId" value="${studNum}"/>
+	<property name="surname">
+	  <generator class="com.datageneration.generators.RandomStringGenerator">
+        <param name="length" value="20"/>
+      </generator>
+    </property>
+	<property name="name">
+	  <generator class="com.datageneration.generators.RandomStringGenerator">
+        <param name="length" value="12"/>
+      </generator>
+    </property>
+	<property name="admissionDate">
+	  <generator class="com.datageneration.generators.DateTimeGenerator">
+        <param name="startDate" value="2008:09:01 00:00:00"/>
+		<param name="endDate" value="2013:09:01 00:00:00"/>
+      </generator>
+    </property>
+	<variable name="studGroup">
+	  <generator class="com.datageneration.generators.RandomGenerator">
+        <param name="maxValue" value="${groupCountForFaculty}"/>
+      </generator>
+	</variable>
+	<property name="groupId" value="Group${studGroup}"/>
+  </object>
+</series>
