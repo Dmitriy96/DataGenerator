@@ -5,10 +5,13 @@ import by.bsuir.diplom.parser.DatabaseDescriptionFileParser;
 
 public class FillDatabase {
     public static void main(String[] args) throws Exception {
-        DatabaseDescriptionFileParser.parse();
-        Object[] entities = PostParsingProcessing.createEntities();
-        for (Object entity : entities) {
-            System.out.println("entity: " + entity);
-        }
+//        try {
+//            DatabaseDescriptionFileParser.parse("database_description.xml");
+//            PostParsingProcessing.saveEntities("hibernate.properties");
+//        } catch (Exception e) {
+//            System.out.println("Something goes wrong.");
+//        }
+        DatabaseDescriptionFileParser.parse("database_description.xml");
+        PostParsingProcessing.saveEntities("hibernate.properties");
     }
 }

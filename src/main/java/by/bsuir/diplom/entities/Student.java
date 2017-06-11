@@ -5,21 +5,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Student")
 public class Student {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    Long id;
-
     @Id
     @Column
     String name;
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    @Column
+    String surname;
+
+    @Column
+    Integer age;
 
     public String getName() {
         return name;
@@ -27,6 +21,22 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     @Override

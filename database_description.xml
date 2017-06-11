@@ -1,13 +1,21 @@
-<variable name="studentName" value="Dmitry"/>
+<!--<variable name="studentName" value="Dmitry"/>
 <variable name="studentAge" value="20"/>
 
 <object id="1" action="save" class="/home/dmitriy/IdeaProjects/diplom/src/main/java/by/bsuir/diplom/entities/Student.java">
-    <property name="name" value="${studentName}"/>
-    <property name="surnname" value="Sanko"/>
+    <property name="name" value="First${studentName}TheBest"/>
+    <property name="surname" value="Sanko"/>
     <property name="age" value="${studentAge}"/>
 </object>
 <object id="2" action="save" class="/home/dmitriy/IdeaProjects/diplom/src/main/java/by/bsuir/diplom/entities/Student.java">
     <property name="name" value="Will"/>
-    <property name="surnname" value="Smith"/>
+    <property name="surname" value="Smith"/>
     <property name="age" value="35"/>
-</object>
+</object>-->
+
+<series count="12" from="1" var="cycleVar">
+    <object class="/home/dmitriy/IdeaProjects/diplom/src/main/java/by/bsuir/diplom/entities/Student.java" id="3">
+        <property name="name" value="Will${cycleVar}"/>
+        <property name="surname" value="Smith"/>
+        <property name="age" value="${cycleVar}"/>
+    </object>
+</series>

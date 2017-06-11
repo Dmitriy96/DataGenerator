@@ -2,6 +2,7 @@ package by.bsuir.diplom.parser;
 
 import by.bsuir.diplom.model.EntityDescriptor;
 import by.bsuir.diplom.model.PropertyDescriptor;
+import by.bsuir.diplom.model.SeriesDescriptor;
 import by.bsuir.diplom.model.VariableDescriptor;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -12,10 +13,15 @@ import java.util.List;
 
 public class CustomSAXParser extends DefaultHandler {
 
+    List<SeriesDescriptor> seriesDescriptors = new ArrayList<SeriesDescriptor>();
     List<VariableDescriptor> variableDescriptors = new ArrayList<VariableDescriptor>();
     List<EntityDescriptor> entityDescriptors = new ArrayList<EntityDescriptor>();
+    SeriesDescriptor currentSeriesDescriptor;
     EntityDescriptor currentEntityDescriptor;
 
+    public List<SeriesDescriptor> getSeriesDescriptors() {
+        return seriesDescriptors;
+    }
 
     public List<VariableDescriptor> getVariableDescriptors() {
         return variableDescriptors;
@@ -26,13 +32,13 @@ public class CustomSAXParser extends DefaultHandler {
     }
 
     @Override
-    public void startDocument() throws SAXException {
-//        System.out.println("Start parse XML...");
-    }
-
-    @Override
     public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
-        System.out.println("startElement: " + namespaceURI + ",  " + localName + ",  " + qName + ",  " + atts);
+        if (qName.equals("series")) {
+            currentSeriesDescriptor = new SeriesDescriptor();
+            currentSeriesDescriptor.setVariable(atts.getValue("var"));
+            currentSeriesDescriptor.setCount(Integer.parseInt(atts.getValue("count")));
+            currentSeriesDescriptor.setFrom(atts.getValue("from") != null ? Integer.parseInt(atts.getValue("from")) : null);
+        }
         if (qName.equals("object")) {
             currentEntityDescriptor = new EntityDescriptor();
             currentEntityDescriptor.setId(Long.parseLong(atts.getValue("id")));
@@ -56,20 +62,15 @@ public class CustomSAXParser extends DefaultHandler {
 
     @Override
     public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
-        System.out.println("endElement: " + namespaceURI + ",  " + localName + ",  " + qName);
+        if (qName.equals("series")) {
+            currentSeriesDescriptor.setEntityDescriptors(entityDescriptors);
+            entityDescriptors = new ArrayList<EntityDescriptor>();
+            seriesDescriptors.add(currentSeriesDescriptor);
+            currentSeriesDescriptor = null;
+        }
         if (qName.equals("object")) {
             entityDescriptors.add(currentEntityDescriptor);
             currentEntityDescriptor = null;
         }
-    }
-
-    @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
-        System.out.println("characters: " + ch + ",  " + start + ",  " + length);
-    }
-
-    @Override
-    public void endDocument() {
-        System.out.println("Stop parse XML...");
     }
 }
